@@ -1,15 +1,32 @@
 class Velr < Formula
   desc "Command-line shell for Velr"
   homepage "https://velr.ai"
-  url "https://github.com/velr-ai/velr.git",
-      tag:      "v0.2.36",
-      revision: "ccb593d61b883c960a80232aaff93cb248d1a137"
+  version "0.2.36"
   license all_of: ["MIT", :cannot_represent]
 
-  depends_on "rust" => :build
+  on_macos do
+    url "https://github.com/velr-ai/velr/releases/download/v0.2.36/velr-v0.2.36-macos-universal.tar.gz"
+    sha256 "0742c57fcf9efc66f281492dea390c36f968175cacd95fb8a54e6164cbbf0e30"
+  end
+
+  on_linux do
+    if Hardware::CPU.arm?
+      url "https://github.com/velr-ai/velr/releases/download/v0.2.36/velr-v0.2.36-linux-aarch64.tar.gz"
+      sha256 "d82a15f41a6fceb0237b04c7018816f1ca451348032aecab6a5ebb26a94d2e0e"
+    else
+      url "https://github.com/velr-ai/velr/releases/download/v0.2.36/velr-v0.2.36-linux-x86_64.tar.gz"
+      sha256 "e794168044935c285373559d442d802f677387eb489314f703a818915a42da18"
+    end
+  end
 
   def install
-    system "cargo", "install", *std_cargo_args(path: "rust/velr-cli")
+    archive_dir = Dir["velr-v0.2.36-*"].first
+    raise "velr archive layout changed" unless archive_dir
+
+    bin.install "#{archive_dir}/velr"
+    pkgshare.install "#{archive_dir}/README.md"
+    pkgshare.install "#{archive_dir}/LICENSE"
+    pkgshare.install "#{archive_dir}/LICENSE.runtime"
   end
 
   test do

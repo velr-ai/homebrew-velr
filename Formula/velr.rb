@@ -20,8 +20,12 @@ class Velr < Formula
   end
 
   def install
-    archive_dir = Dir["velr-v0.2.36-*"].first
-    raise "velr archive layout changed" unless archive_dir
+    archive_dir = if File.exist?("velr")
+      "."
+    else
+      Dir["velr-v0.2.36-*"].first
+    end
+    raise "velr archive layout changed" unless archive_dir && File.exist?("#{archive_dir}/velr")
 
     bin.install "#{archive_dir}/velr"
     pkgshare.install "#{archive_dir}/README.md"

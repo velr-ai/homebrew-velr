@@ -1,26 +1,26 @@
 class Velr < Formula
   desc "Command-line shell and offline CSV importer for Velr"
   homepage "https://velr.ai"
-  version "0.2.51"
+  version "0.2.55"
   license all_of: ["MIT", :cannot_represent]
 
   on_macos do
     if Hardware::CPU.arm?
-      url "https://github.com/velr-ai/velr/releases/download/v0.2.51/velr-v0.2.51-macos-aarch64.tar.gz"
-      sha256 "a6326566d4d175918ac1b25e5a3870149eb95056442271960db7e6c229f833e5"
+      url "https://github.com/velr-ai/velr/releases/download/v0.2.55/velr-v0.2.55-macos-aarch64.tar.gz"
+      sha256 "91237afa57b30fbc36c63be6df92442f5f597eff4edfab1581836e5807786390"
     else
-      url "https://github.com/velr-ai/velr/releases/download/v0.2.51/velr-v0.2.51-macos-x86_64.tar.gz"
-      sha256 "160e37a308bb0eff98b888b15f5ac9fbd2898be89941d03ed4eb211af9683fc7"
+      url "https://github.com/velr-ai/velr/releases/download/v0.2.55/velr-v0.2.55-macos-x86_64.tar.gz"
+      sha256 "105f5b53c43e7a21cc197fcd15d794913007fb73ee6a07f7b1627c79847f9e4e"
     end
   end
 
   on_linux do
     if Hardware::CPU.arm?
-      url "https://github.com/velr-ai/velr/releases/download/v0.2.51/velr-v0.2.51-linux-aarch64.tar.gz"
-      sha256 "9017bde25fcd7cfbab222ef0780213e5dbacc280f1cdc1e0651d9017d0c71bde"
+      url "https://github.com/velr-ai/velr/releases/download/v0.2.55/velr-v0.2.55-linux-aarch64.tar.gz"
+      sha256 "e566431f1a34ae0bf36a12938bdd5d587d08f3c5035708a94c423a0ee7002f60"
     else
-      url "https://github.com/velr-ai/velr/releases/download/v0.2.51/velr-v0.2.51-linux-x86_64.tar.gz"
-      sha256 "ec6cc25c0850f285e989fed5d80ebea061a587485d94e46dc8fca6b19c164369"
+      url "https://github.com/velr-ai/velr/releases/download/v0.2.55/velr-v0.2.55-linux-x86_64.tar.gz"
+      sha256 "0f83830beb5e4e4df4cbd454b5901a98635b74be2da60cec317b16f8264a9e83"
     end
   end
 
@@ -28,7 +28,7 @@ class Velr < Formula
     archive_dir = if File.exist?("velr")
       "."
     else
-      Dir["velr-v0.2.51-*"].first
+      Dir["velr-v0.2.55-*"].first
     end
     raise "velr archive layout changed" unless archive_dir && File.exist?("#{archive_dir}/velr") && File.exist?("#{archive_dir}/velr-admin")
 
@@ -40,8 +40,8 @@ class Velr < Formula
   end
 
   test do
-    assert_match "velr-cli 0.2.51", shell_output("#{bin}/velr --version")
-    assert_match "0.2.51", shell_output("#{bin}/velr-admin --version")
+    assert_match "velr-cli 0.2.55", shell_output("#{bin}/velr --version")
+    assert_match "0.2.55", shell_output("#{bin}/velr-admin --version")
     assert_match "database import full", shell_output("#{bin}/velr-admin --help")
     assert_equal "n\n1\n", shell_output("#{bin}/velr -f tsv -e 'RETURN 1 AS n'")
   end
